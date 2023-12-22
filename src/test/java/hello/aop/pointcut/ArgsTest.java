@@ -25,24 +25,27 @@ public class ArgsTest {
         return pointcut;
     }
 
+    // args는 런타임에 전달된 인수로 판단(동적)
+    // execution은 메서드의 시그니처로 판단(정적)
     @Test
     void args() {
-        assertThat(pointcut("").matches(helloMethod, MemberServiceImpl.class)).isTrue();
-        assertThat(pointcut("").matches(helloMethod, MemberServiceImpl.class)).isTrue();
-        assertThat(pointcut("").matches(helloMethod, MemberServiceImpl.class)).isFalse();
-        assertThat(pointcut("").matches(helloMethod, MemberServiceImpl.class)).isTrue();
-        assertThat(pointcut("").matches(helloMethod, MemberServiceImpl.class)).isTrue();
-        assertThat(pointcut("").matches(helloMethod, MemberServiceImpl.class)).isTrue();
+        assertThat(pointcut("args(String)").matches(helloMethod, MemberServiceImpl.class)).isTrue();
+        assertThat(pointcut("args(Object)").matches(helloMethod, MemberServiceImpl.class)).isTrue();
+        assertThat(pointcut("args()").matches(helloMethod, MemberServiceImpl.class)).isFalse();
+        assertThat(pointcut("args(..)").matches(helloMethod, MemberServiceImpl.class)).isTrue();
+        assertThat(pointcut("args(*)").matches(helloMethod, MemberServiceImpl.class)).isTrue();
+        assertThat(pointcut("args(String,..)").matches(helloMethod, MemberServiceImpl.class)).isTrue();
     }
 
     @Test
     void argsVsExecution() {
-        assertThat(pointcut("").matches(helloMethod, MemberServiceImpl.class)).isTrue();
-        assertThat(pointcut("").matches(helloMethod, MemberServiceImpl.class)).isTrue();
-        assertThat(pointcut("").matches(helloMethod, MemberServiceImpl.class)).isTrue();
+        assertThat(pointcut("args(String)").matches(helloMethod, MemberServiceImpl.class)).isTrue();
+        assertThat(pointcut("args(java.io.Serializable)").matches(helloMethod, MemberServiceImpl.class)).isTrue();
+        assertThat(pointcut("args(CharSequence)").matches(helloMethod, MemberServiceImpl.class)).isTrue();
+        assertThat(pointcut("args(Object)").matches(helloMethod, MemberServiceImpl.class)).isTrue();
 
-        assertThat(pointcut("").matches(helloMethod, MemberServiceImpl.class)).isTrue();
-        assertThat(pointcut("").matches(helloMethod, MemberServiceImpl.class)).isFalse();
-        assertThat(pointcut("").matches(helloMethod, MemberServiceImpl.class)).isFalse();
+        assertThat(pointcut("execution(* *(String))").matches(helloMethod, MemberServiceImpl.class)).isTrue();
+        assertThat(pointcut("execution(* *(java.io.Serializable))").matches(helloMethod, MemberServiceImpl.class)).isFalse();
+        assertThat(pointcut("execution(* *(Object))").matches(helloMethod, MemberServiceImpl.class)).isFalse();
     }
 }

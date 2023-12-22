@@ -9,9 +9,9 @@ import org.aspectj.lang.annotation.Aspect;
 @Aspect
 public class AspectV1 {
 
-    @Around("execution(* hello.aop.order..*(..))")
-    public Object doLog(ProceedingJoinPoint joinPoint) throws Throwable {
-        log.info("[log] {}", joinPoint.getSignature());
+    @Around("execution(* hello.aop.order..*(..))") // 포인트컷
+    public Object doLog(ProceedingJoinPoint joinPoint) throws Throwable { // 어드바이스
+        log.info("[log] {}", joinPoint.getSignature()); // join point 시그니처
         return joinPoint.proceed();
     }
 }

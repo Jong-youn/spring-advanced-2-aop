@@ -27,27 +27,27 @@ public class WithinTest {
 
     @Test
     void withinStar() {
-        pointcut.setExpression("within(hello.aop.member.)");
+        pointcut.setExpression("within(hello.aop.member.*Service*)");
         Assertions.assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class)).isTrue();
     }
 
     @Test
     void withinSubPackage() {
-        pointcut.setExpression("within(hello.aop.member.)");
+        pointcut.setExpression("within(hello.aop..*)");
         Assertions.assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class)).isTrue();
     }
 
     @Test
     @DisplayName("타겟의 타입에만 직접 적용, 인터페이스를 선정하면 안된다.")
     void withinSuperTypeFalse() {
-        pointcut.setExpression("within(hello.aop.member.)");
+        pointcut.setExpression("within(hello.aop.member.MemberService)");
         Assertions.assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class)).isFalse();
     }
 
     @Test
     @DisplayName("execution은 타입 기반, 인터페이스를 선정 가능.")
     void withinSuperTypeTrue() {
-        pointcut.setExpression("within(hello.aop.member.)");
+        pointcut.setExpression("execution(* hello.aop.member.MemberService.*(..))");
         Assertions.assertThat(pointcut.matches(helloMethod, MemberServiceImpl.class)).isTrue();
     }
 }

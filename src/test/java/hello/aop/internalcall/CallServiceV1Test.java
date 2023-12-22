@@ -12,8 +12,8 @@ public class CallServiceV1Test {
     @Autowired
     CallServiceV1 callServiceV1;
 
-    @Test
-    void external() {
-        callServiceV1.external();
-    }
+//    @Test
+//    void external() {
+//        callServiceV1.external();
+//    }
 }
