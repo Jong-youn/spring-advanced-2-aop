@@ -29,8 +29,10 @@ public class ParameterTest {
         memberService.hello("helloA");
     }
 
+    @Slf4j
     @Aspect
     static class ParameterAspect {
+
         @Pointcut("execution(* hello.aop.member..*.*(..))")
         private void allMember() {}
 
@@ -62,7 +64,7 @@ public class ParameterTest {
             log.info("[target]{}, obj={}", joinPoint.getSignature(), obj.getClass());
         }
 
-        @Before("allMember() && @target(annotation")
+        @Before("allMember() && @target(annotation)")
         public void atTarget(JoinPoint joinPoint, ClassAop annotation){
             log.info("[@target]{}, obj={}", joinPoint.getSignature(), annotation);
         }

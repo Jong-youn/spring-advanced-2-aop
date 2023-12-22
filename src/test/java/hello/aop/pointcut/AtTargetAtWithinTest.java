@@ -22,8 +22,8 @@ public class AtTargetAtWithinTest {
     @Test
     void success() {
         log.info("child proxy={}", child.getClass());
-        child.childMethod(); // ºÎ¸ğ, ÀÚ½Ä ¸ğµÎ ÀÖ´Â ¸Ş¼­µå
-        child.parentMethod(); // ºÎ¸ğ Å¬·¡½º¸¸ ÀÖ´Â ¸Ş¼­µå
+        child.childMethod(); // ë¶€ëª¨, ìì‹ ëª¨ë‘ ìˆëŠ” ë©”ì„œë“œ
+        child.parentMethod(); // ë¶€ëª¨ í´ë˜ìŠ¤ë§Œ ìˆëŠ” ë©”ì„œë“œ
     }
 
     static class Config {
@@ -45,7 +45,7 @@ public class AtTargetAtWithinTest {
     }
 
     static class Parent {
-        public void parentMethod(){} // ºÎ¸ğ¿¡¸¸ ÀÖ´Â ¸Ş¼­µå
+        public void parentMethod(){} // ë¶€ëª¨ì—ë§Œ ìˆëŠ” ë©”ì„œë“œ
     }
 
     @ClassAop
@@ -57,14 +57,14 @@ public class AtTargetAtWithinTest {
     @Aspect
     static class AtTargetAtWithinAspect {
 
-        // @target: ÀÎ½ºÅÏ½º ±âÁØÀ¸·Î ¸ğµç ¸Ş¼­µåÀÇ Á¶ÀÎ Æ÷ÀÎÆ®¸¦ ¼±Á¤, ºÎ¸ğ Å¸ÀÔÀÇ ¸Ş¼­µåµµ Àû¿ë
+        // @target: ì¸ìŠ¤í„´ìŠ¤ ê¸°ì¤€ìœ¼ë¡œ ëª¨ë“  ë©”ì„œë“œì˜ ì¡°ì¸ í¬ì¸íŠ¸ë¥¼ ì„ ì •, ë¶€ëª¨ íƒ€ì…ì˜ ë©”ì„œë“œë„ ì ìš©
         @Around("execution(* hello.aop..*(..)) && @target(hello.aop.member.annotation.ClassAop)")
         public Object atTarget(ProceedingJoinPoint joinPoint) throws Throwable {
             log.info("[@target] {}", joinPoint.getSignature());
             return joinPoint.proceed();
         }
 
-        // @within: ¼±ÅÃµÈ Å¬·¡½º ³»ºÎ¿¡ ÀÖ´Â ¸Ş¼­µå¸¸ Á¶ÀÎ Æ÷ÀÎÆ®·Î ¼±Á¤, ºÎ¸ğ Å¸ÀÔÀÇ ¸Ş¼­µå´Â Àû¿ëµÇÁö ¾ÊÀ½
+        // @within: ì„ íƒëœ í´ë˜ìŠ¤ ë‚´ë¶€ì— ìˆëŠ” ë©”ì„œë“œë§Œ ì¡°ì¸ í¬ì¸íŠ¸ë¡œ ì„ ì •, ë¶€ëª¨ íƒ€ì…ì˜ ë©”ì„œë“œëŠ” ì ìš©ë˜ì§€ ì•ŠìŒ
         @Around("execution(* hello.aop..*(..)) && @within(hello.aop.member.annotation.ClassAop)")
         public Object atWithin(ProceedingJoinPoint joinPoint) throws Throwable {
             log.info("[@within] {}", joinPoint.getSignature());
