@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+/**
+ * 구조를 변경(분리)
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor

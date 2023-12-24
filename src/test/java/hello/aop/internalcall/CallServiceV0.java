@@ -9,7 +9,7 @@ public class CallServiceV0 {
 
     public void external() {
         log.info("call external");
-        internal();
+        internal(); // 내부 메서드 호출(this.internal())
     }
 
     public void internal() {
